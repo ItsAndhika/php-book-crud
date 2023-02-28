@@ -1,6 +1,8 @@
 <?php
+require "./Database.php";
 
-
+$db = new Database();
+$books = $db->getAll();
 ?>
 
 <!DOCTYPE html>
@@ -33,6 +35,35 @@
             </div>
         </div>
     </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Writer</th>
+                            <th scope="col">Year</th>
+                            <th scope="col">Publisher</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($books as $book) :  ?>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td><?= $book["title"]; ?></td>
+                                <td><?= $book["writer"]; ?></td>
+                                <td><?= $book["year"]; ?></td>
+                                <td><?= $book["publisher"]; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     <script src="js/bootstrap.js"></script>
 </body>
 
