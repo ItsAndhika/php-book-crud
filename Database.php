@@ -55,6 +55,35 @@ class Database
         return $this->stmt->rowCount();
     }
 
+    public function edit($data)
+    {
+        $id = $data["id"];
+        $title = htmlspecialchars($data["title"]);
+        $slug = $this->slugify($title);
+        $writer = htmlspecialchars($data["writer"]);
+        $year = htmlspecialchars($data["year"]);
+        $publisher = htmlspecialchars($data["publisher"]);
+        $price = htmlspecialchars($data["price"]);
+
+        $this->stmt = $this->dbh->prepare("UPDATE books SET
+                                            title = '$title',
+                                            slug = '$slug',
+                                            writer = '$writer',
+                                            year = $year,
+                                            publisher = '$publisher',
+                                            price = $price
+                                            WHERE id = $id");
+        $this->stmt->execute();
+        return $this->stmt->rowCount();
+    }
+
+    public function delete($slug)
+    {
+        $this->stmt = $this->dbh->prepare("DELETE FROM books WHERE slug = '$slug'");
+        $this->stmt->execute();
+        return $this->stmt->rowCount();
+    }
+
     public function slugify($text)
     {
         $text = preg_replace("/[^A-Za-z0-9]+/", "-", $text);

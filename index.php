@@ -49,7 +49,7 @@ $books = $db->getAll();
                                 <td>
                                     <a href="details.php?slug=<?= $book["slug"]; ?>" class="btn btn-primary badge text-decoration-none">Details</a>
                                     <a href="edit.php?slug=<?= $book["slug"]; ?>" class="btn btn-warning badge text-decoration-none">Edit</a>
-                                    <a href="delete.php?slug=<?= $book["slug"]; ?>" class="btn btn-danger badge text-decoration-none">Delete</a>
+                                    <a href="delete.php?slug=<?= $book["slug"]; ?>" class="btn btn-danger badge text-decoration-none" onclick="return confirm('Are you sure?')">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
