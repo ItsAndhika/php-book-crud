@@ -1,4 +1,5 @@
 <?php
+session_start();
 require "./Database.php";
 
 $db = new Database();
@@ -22,7 +23,13 @@ $books = $db->getAll();
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-8">
-                <a href="add.php" class="btn btn-primary">Add Book Data</a>
+                <a href="add.php" class="btn btn-primary mb-2">Add Book Data</a>
+                <?php if (isset($_SESSION["message"])) : ?>
+                    <div class="alert alert-success" role="alert">
+                        <?= $_SESSION["message"]; ?>
+                        <?php unset($_SESSION["message"]) ?>
+                    </div>
+                <?php endif; ?>
                 <table class="table">
                     <thead>
                         <tr>
@@ -41,6 +48,8 @@ $books = $db->getAll();
                                 <td><?= $book["writer"]; ?></td>
                                 <td>
                                     <a href="details.php?slug=<?= $book["slug"]; ?>" class="btn btn-primary badge text-decoration-none">Details</a>
+                                    <a href="edit.php?slug=<?= $book["slug"]; ?>" class="btn btn-warning badge text-decoration-none">Edit</a>
+                                    <a href="delete.php?slug=<?= $book["slug"]; ?>" class="btn btn-danger badge text-decoration-none">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

@@ -37,7 +37,7 @@ class Database
     public function add($data)
     {
         $title = htmlspecialchars($data["title"]);
-        $slug = htmlspecialchars($data["slug"]);
+        $slug = $this->slugify($title);
         $writer = htmlspecialchars($data["writer"]);
         $year = htmlspecialchars($data["year"]);
         $publisher = htmlspecialchars($data["publisher"]);
@@ -53,5 +53,17 @@ class Database
                                             $price)");
         $this->stmt->execute();
         return $this->stmt->rowCount();
+    }
+
+    public function slugify($text)
+    {
+        $text = preg_replace("/[^A-Za-z0-9]+/", "-", $text);
+        $text = iconv("utf-8", "us-ascii//TRANSLIT", $text);
+        $text = trim($text, "-");
+        $text = strtolower($text);
+        if (empty($text)) {
+            return "n-a";
+        }
+        return $text;
     }
 }

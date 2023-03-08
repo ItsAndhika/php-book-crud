@@ -1,22 +1,12 @@
 <?php
+session_start();
 require "./Database.php";
 $db = new Database();
 
 if (isset($_POST["add"])) {
     if ($db->add($_POST) > 0) {
-        echo "
-                <script>
-                    alert('Data successfully added!'); 
-                    document.location.href = 'index.php';
-                </script>
-            ";
-    } else {
-        echo "
-                <script>
-                    alert('Data cannot added!'); 
-                    document.location.href = 'index.php';
-                </script>
-            ";
+        $_SESSION["message"] = "Data successfuly added!";
+        header("Location: index.php");
     }
 }
 ?>
@@ -43,10 +33,6 @@ if (isset($_POST["add"])) {
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
                         <input type="text" class="form-control" id="title" name="title" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="slug" class="form-label">Slug</label>
-                        <input type="text" class="form-control" id="slug" name="slug" required>
                     </div>
                     <div class="mb-3">
                         <label for="writer" class="form-label">Writer</label>
